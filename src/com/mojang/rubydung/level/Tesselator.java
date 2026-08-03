@@ -12,109 +12,109 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class Tesselator {
-    private static final int MAX_MEMORY_USE = 0x400000;
-    private static final int MAX_FLOATS = 524288;
-    private FloatBuffer buffer = BufferUtils.createFloatBuffer((int)524288);
-    private float[] array = new float[524288];
-    private int vertices = 0;
-    private float u;
-    private float v;
-    private float r;
-    private float g;
-    private float b;
-    private boolean hasColor = false;
-    private boolean hasTexture = false;
-    private int len = 3;
-    private int p = 0;
-    public static Tesselator instance = new Tesselator();
+	private static final int MAX_MEMORY_USE = 0x400000;
+	private static final int MAX_FLOATS = 524288;
+	private FloatBuffer buffer = BufferUtils.createFloatBuffer((int)524288);
+	private float[] array = new float[524288];
+	private int vertices = 0;
+	private float u;
+	private float v;
+	private float r;
+	private float g;
+	private float b;
+	private boolean hasColor = false;
+	private boolean hasTexture = false;
+	private int len = 3;
+	private int p = 0;
+	public static Tesselator instance = new Tesselator();
 
-    private Tesselator() {
-    }
+	private Tesselator() {
+	}
 
-    public void flush() {
-        this.buffer.clear();
-        this.buffer.put(this.array, 0, this.p);
-        this.buffer.flip();
-        if (this.hasTexture && this.hasColor) {
-            GL11.glInterleavedArrays((int)10794, (int)0, (FloatBuffer)this.buffer);
-        } else if (this.hasTexture) {
-            GL11.glInterleavedArrays((int)10791, (int)0, (FloatBuffer)this.buffer);
-        } else if (this.hasColor) {
-            GL11.glInterleavedArrays((int)10788, (int)0, (FloatBuffer)this.buffer);
-        } else {
-            GL11.glInterleavedArrays((int)10785, (int)0, (FloatBuffer)this.buffer);
-        }
-        GL11.glEnableClientState((int)32884);
-        if (this.hasTexture) {
-            GL11.glEnableClientState((int)32888);
-        }
-        if (this.hasColor) {
-            GL11.glEnableClientState((int)32886);
-        }
-        GL11.glDrawArrays((int)7, (int)0, (int)this.vertices);
-        GL11.glDisableClientState((int)32884);
-        if (this.hasTexture) {
-            GL11.glDisableClientState((int)32888);
-        }
-        if (this.hasColor) {
-            GL11.glDisableClientState((int)32886);
-        }
-        this.clear();
-    }
+	public void flush() {
+		this.buffer.clear();
+		this.buffer.put(this.array, 0, this.p);
+		this.buffer.flip();
+		if (this.hasTexture && this.hasColor) {
+			GL11.glInterleavedArrays((int)10794, (int)0, (FloatBuffer)this.buffer);
+		} else if (this.hasTexture) {
+			GL11.glInterleavedArrays((int)10791, (int)0, (FloatBuffer)this.buffer);
+		} else if (this.hasColor) {
+			GL11.glInterleavedArrays((int)10788, (int)0, (FloatBuffer)this.buffer);
+		} else {
+			GL11.glInterleavedArrays((int)10785, (int)0, (FloatBuffer)this.buffer);
+		}
+		GL11.glEnableClientState((int)32884);
+		if (this.hasTexture) {
+			GL11.glEnableClientState((int)32888);
+		}
+		if (this.hasColor) {
+			GL11.glEnableClientState((int)32886);
+		}
+		GL11.glDrawArrays((int)7, (int)0, (int)this.vertices);
+		GL11.glDisableClientState((int)32884);
+		if (this.hasTexture) {
+			GL11.glDisableClientState((int)32888);
+		}
+		if (this.hasColor) {
+			GL11.glDisableClientState((int)32886);
+		}
+		this.clear();
+	}
 
-    private void clear() {
-        this.vertices = 0;
-        this.buffer.clear();
-        this.p = 0;
-    }
+	private void clear() {
+		this.vertices = 0;
+		this.buffer.clear();
+		this.p = 0;
+	}
 
-    public void init() {
-        this.clear();
-        this.hasColor = false;
-        this.hasTexture = false;
-    }
+	public void init() {
+		this.clear();
+		this.hasColor = false;
+		this.hasTexture = false;
+	}
 
-    public void tex(float u, float v) {
-        if (!this.hasTexture) {
-            this.len += 2;
-        }
-        this.hasTexture = true;
-        this.u = u;
-        this.v = v;
-    }
+	public void tex(float u, float v) {
+		if (!this.hasTexture) {
+			this.len += 2;
+		}
+		this.hasTexture = true;
+		this.u = u;
+		this.v = v;
+	}
 
-    public void color(float r, float g, float b) {
-        if (!this.hasColor) {
-            this.len += 3;
-        }
-        this.hasColor = true;
-        this.r = r;
-        this.g = g;
-        this.b = b;
-    }
+	public void color(float r, float g, float b) {
+		if (!this.hasColor) {
+			this.len += 3;
+		}
+		this.hasColor = true;
+		this.r = r;
+		this.g = g;
+		this.b = b;
+	}
 
-    public void vertexUV(float x, float y, float z, float u, float v) {
-        this.tex(u, v);
-        this.vertex(x, y, z);
-    }
+	public void vertexUV(float x, float y, float z, float u, float v) {
+		this.tex(u, v);
+		this.vertex(x, y, z);
+	}
 
-    public void vertex(float x, float y, float z) {
-        if (this.hasTexture) {
-            this.array[this.p++] = this.u;
-            this.array[this.p++] = this.v;
-        }
-        if (this.hasColor) {
-            this.array[this.p++] = this.r;
-            this.array[this.p++] = this.g;
-            this.array[this.p++] = this.b;
-        }
-        this.array[this.p++] = x;
-        this.array[this.p++] = y;
-        this.array[this.p++] = z;
-        ++this.vertices;
-        if (this.p >= 524288 - this.len) {
-            this.flush();
-        }
-    }
+	public void vertex(float x, float y, float z) {
+		if (this.hasTexture) {
+			this.array[this.p++] = this.u;
+			this.array[this.p++] = this.v;
+		}
+		if (this.hasColor) {
+			this.array[this.p++] = this.r;
+			this.array[this.p++] = this.g;
+			this.array[this.p++] = this.b;
+		}
+		this.array[this.p++] = x;
+		this.array[this.p++] = y;
+		this.array[this.p++] = z;
+		++this.vertices;
+		if (this.p >= 524288 - this.len) {
+			this.flush();
+		}
+	}
 }
 
