@@ -36,10 +36,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+import org.lwjgl.opengl.DisplayMode;
 
 public class RubyDung
 implements Runnable {
-	private static final boolean FULLSCREEN_MODE = true;
 	private int width;
 	private int height;
 	private FloatBuffer fogColor0 = BufferUtils.createFloatBuffer((int)4);
@@ -66,12 +66,12 @@ implements Runnable {
 		this.fogColor0.flip();
 		this.fogColor1.put(new float[]{(float)(col1 >> 16 & 0xFF) / 255.0f, (float)(col1 >> 8 & 0xFF) / 255.0f, (float)(col1 & 0xFF) / 255.0f, 1.0f});
 		this.fogColor1.flip();
-		Display.setFullscreen((boolean)true);
+		this.width = 800;
+		this.height = 600;
+		Display.setDisplayMode(new DisplayMode(this.width, this.height));
 		Display.create();
 		Keyboard.create();
 		Mouse.create();
-		this.width = Display.getDisplayMode().getWidth();
-		this.height = Display.getDisplayMode().getHeight();
 		GL11.glEnable((int)3553);
 		GL11.glShadeModel((int)7425);
 		GL11.glClearColor((float)fr, (float)fg, (float)fb, (float)0.0f);
