@@ -279,14 +279,14 @@ implements Runnable {
 		this.player.turn(xo, yo);
 		this.pick(a);
 		while (Mouse.next()) {
-			if (Mouse.getEventButton() == 1 && Mouse.getEventButtonState() && this.hitResult != null) {
+			if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() && this.hitResult != null) {
 				Tile oldTile = Tile.tiles[this.level.getTile(this.hitResult.x, this.hitResult.y, this.hitResult.z)];
 				boolean changed = this.level.setTile(this.hitResult.x, this.hitResult.y, this.hitResult.z, 0);
 				if (oldTile != null && changed) {
 					oldTile.destroy(this.level, this.hitResult.x, this.hitResult.y, this.hitResult.z, this.particleEngine);
 				}
 			}
-			if (Mouse.getEventButton() != 0 || !Mouse.getEventButtonState() || this.hitResult == null) continue;
+			if (Mouse.getEventButton() != 1 || !Mouse.getEventButtonState() || this.hitResult == null) continue;
 			int x = this.hitResult.x;
 			int y = this.hitResult.y;
 			int z = this.hitResult.z;
