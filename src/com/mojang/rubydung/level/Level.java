@@ -22,7 +22,7 @@ public class Level {
 	public final int width;
 	public final int height;
 	public final int depth;
-	private byte[] blocks;
+	public byte[] blocks;
 	private int[] lightDepths;
 	private ArrayList<LevelListener> levelListeners = new ArrayList();
 	private Random random = new Random();
@@ -36,59 +36,9 @@ public class Level {
 		this.lightDepths = new int[w * h];
 		boolean mapLoaded = this.load();
 		if (!mapLoaded) {
-			this.generateMap();
+			LevelGenerator.generateMap(this);
 		}
 		this.calcLightDepths(0, 0, w, h);
-	}
-
-	private void generateMap() {
-		int w = this.width;
-		int h = this.height;
-		int d = this.depth;
-		int[] heightmap1 = new PerlinNoiseFilter(0).read(w, h);
-		int[] heightmap2 = new PerlinNoiseFilter(0).read(w, h);
-		int[] cf = new PerlinNoiseFilter(1).read(w, h);
-		int x = 0;
-		while (x < w) {
-			int y = 0;
-			while (y < d) {
-				int z = 0;
-				while (z < h) {
-					int dh;
-					int dh1 = heightmap1[x + z * this.width];
-					int dh2 = heightmap2[x + z * this.width];
-					int cfh = cf[x + z * this.width];
-					if (cfh < 128) {
-						dh2 = dh1;
-					}
-					if (dh2 > (dh = dh1)) {
-						dh = dh2;
-					} else {
-						dh2 = dh1;
-					}
-					dh = dh / 8 + d / 3;
-					int rh = dh - 4;
-					int i = (y * this.height + z) * this.width + x;
-					int id = 0;
-					if (y == dh) {
-						id = Tile.grass.id;
-					}
-					if (y < dh) {
-						id = Tile.dirt.id;
-					}
-					if (y <= rh) {
-						id = Tile.rock.id;
-					}
-					if (y <= 2) {
-						id = Tile.bedrock.id;
-					}
-					this.blocks[i] = (byte)id;
-					++z;
-				}
-				++y;
-			}
-			++x;
-		}
 	}
 
 	public boolean load() {
