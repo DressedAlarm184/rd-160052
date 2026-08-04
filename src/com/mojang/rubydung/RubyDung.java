@@ -191,22 +191,26 @@ implements Runnable {
 	public void tick() {
 		while (Keyboard.next()) {
 			if (!Keyboard.getEventKeyState()) continue;
-			if (Keyboard.getEventKey() == 28) {
+			int key = Keyboard.getEventKey();
+			if (key == 28) {
 				this.level.save();
 			}
-			if (Keyboard.getEventKey() == 2) {
+			if (key == 2) {
 				this.paintTexture = 1;
 			}
-			if (Keyboard.getEventKey() == 3) {
+			if (key == 3) {
 				this.paintTexture = 3;
 			}
-			if (Keyboard.getEventKey() == 4) {
+			if (key == 4) {
 				this.paintTexture = 4;
 			}
-			if (Keyboard.getEventKey() == 5) {
+			if (key == 5) {
 				this.paintTexture = 5;
 			}
-			if (Keyboard.getEventKey() != 34) continue;
+			if (key == 6) {
+				this.paintTexture = 6;
+			}
+			if (key != 34) continue;
 			this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
 		}
 		this.level.tick();

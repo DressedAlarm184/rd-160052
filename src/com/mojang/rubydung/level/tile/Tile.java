@@ -20,6 +20,7 @@ public class Tile {
 	public static final Tile dirt = new DirtTile(3, 2);
 	public static final Tile stoneBrick = new Tile(4, 16);
 	public static final Tile wood = new Tile(5, 4);
+	public static final Tile bricks = new Tile(6, 5);
 	public int tex;
 	public final int id;
 
