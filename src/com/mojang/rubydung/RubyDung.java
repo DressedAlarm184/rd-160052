@@ -25,6 +25,7 @@ import com.mojang.rubydung.level.Tesselator;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.particle.ParticleEngine;
 import com.mojang.rubydung.phys.AABB;
+import com.mojang.rubydung.FontRenderer;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
