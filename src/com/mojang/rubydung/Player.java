@@ -56,5 +56,10 @@ extends Entity {
 			this.resetPos();
 		}
 	}
+
+	@Override public void resetPos() {
+		super.resetPos();
+		this.setRot(0, 0);
+	}
 }
 

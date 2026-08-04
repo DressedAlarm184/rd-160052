@@ -50,11 +50,19 @@ public class Entity {
 
 	protected void setPos(float x, float y, float z) {
 		this.x = x;
+		this.xd = 0;
 		this.y = y;
+		this.yd = 0;
 		this.z = z;
+		this.zd = 0;
 		float w = this.bbWidth / 2.0f;
 		float h = this.bbHeight / 2.0f;
 		this.bb = new AABB(x - w, y - h, z - w, x + w, y + h, z + w);
+	}
+
+	protected void setRot(float xRot, float yRot) {
+		this.xRot = xRot;
+		this.yRot = yRot;
 	}
 
 	public void turn(float xo, float yo) {
