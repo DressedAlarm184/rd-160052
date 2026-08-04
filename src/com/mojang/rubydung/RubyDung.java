@@ -206,12 +206,14 @@ implements Runnable {
 		while (Keyboard.next()) {
 			if (!Keyboard.getEventKeyState()) continue;
 			int key = Keyboard.getEventKey();
-			if (key == 28) {
+			if (key == 28) { // Enter
 				this.level.save();
-			} else if (key == 34) {
+			} else if (key == 34) { // G
 				this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
-			} else if (key == 19) {
+			} else if (key == 19) { // R
 				player.resetPos();
+			} else if (key == 33) { // F
+				player.isFlying = !player.isFlying;
 			}
 		}
 
