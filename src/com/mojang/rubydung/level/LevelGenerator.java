@@ -129,11 +129,12 @@ public class LevelGenerator {
 	}
 
 	private static byte getTile(Level l, int x, int y, int z) {
+		if (x < 0 || z < 0 || x >= l.width || z >= l.height || y < 0 || y >= l.depth) return 0;
 		return l.blocks[(y * l.height + z) * l.width + x];
 	}
 
 	private static void setTile(Level l, int x, int y, int z, int id) {
-		if (x < 0 || z < 0 || x > l.width || z > l.height || y < 0 || y > l.depth) return;
+		if (x < 0 || z < 0 || x >= l.width || z >= l.height || y < 0 || y >= l.depth) return;
 		l.blocks[(y * l.height + z) * l.width + x] = (byte)id;
 	}
 }
