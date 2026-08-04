@@ -40,7 +40,7 @@ extends Entity {
 			xa += 1.0f;
 		}
 		if ((Keyboard.isKeyDown((int)57) || Keyboard.isKeyDown((int)219))) { // Space
-			if (this.onGround) this.yd = 0.5f;
+			if (this.onGround) this.yd = 0.55f;
 			if (this.isFlying) fly_yd = 0.5f;
 		}
 		if (Keyboard.isKeyDown((int)42) && this.isFlying) fly_yd = -0.5f; // Shift

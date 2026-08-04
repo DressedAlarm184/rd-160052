@@ -24,6 +24,7 @@ import com.mojang.rubydung.level.LevelRenderer;
 import com.mojang.rubydung.level.Tesselator;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.particle.ParticleEngine;
+import com.mojang.rubydung.phys.AABB;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -343,7 +344,10 @@ implements Runnable {
 			if (this.hitResult.f == 5) {
 				++x;
 			}
-			this.level.setTile(x, y, z, this.paintTexture);
+			AABB aabb = new AABB(x, y, z, x + 1, y + 1, z + 1);
+			if (!aabb.intersects(this.player.bb)) {
+				this.level.setTile(x, y, z, this.paintTexture);
+			}
 		}
 		GL11.glClear((int)16640);
 		this.setupCamera(a);
