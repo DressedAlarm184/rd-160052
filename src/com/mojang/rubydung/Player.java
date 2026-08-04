@@ -64,7 +64,13 @@ extends Entity {
 	}
 
 	@Override public void resetPos() {
-		super.resetPos();
+		int target_x = level.width / 2;
+		int target_y = level.depth;
+		int target_z = level.height / 2;
+		while (true) {
+			if (level.getTile(target_x, target_y--, target_z) != 0) break;
+		}
+		this.setPos(target_x, target_y + 10, target_z);
 		this.setRot(0, 0);
 	}
 
