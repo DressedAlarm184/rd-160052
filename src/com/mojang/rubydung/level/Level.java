@@ -48,7 +48,6 @@ public class Level {
 		int[] heightmap1 = new PerlinNoiseFilter(0).read(w, h);
 		int[] heightmap2 = new PerlinNoiseFilter(0).read(w, h);
 		int[] cf = new PerlinNoiseFilter(1).read(w, h);
-		int[] rockMap = new PerlinNoiseFilter(1).read(w, h);
 		int x = 0;
 		while (x < w) {
 			int y = 0;
@@ -68,10 +67,7 @@ public class Level {
 						dh2 = dh1;
 					}
 					dh = dh / 8 + d / 3;
-					int rh = rockMap[x + z * this.width] / 8 + d / 3;
-					if (rh > dh - 2) {
-						rh = dh - 2;
-					}
+					int rh = dh - 4;
 					int i = (y * this.height + z) * this.width + x;
 					int id = 0;
 					if (y == dh) {
