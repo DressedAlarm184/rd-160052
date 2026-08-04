@@ -57,6 +57,8 @@ implements Runnable {
 	private IntBuffer selectBuffer = BufferUtils.createIntBuffer((int)2000);
 	private HitResult hitResult = null;
 	FloatBuffer lb = BufferUtils.createFloatBuffer((int)16);
+	private int active_texture = 0;
+	private int[] textures = {1, 3, 4, 5, 6};
 
 	static Level create_level() {
 		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
@@ -189,30 +191,28 @@ implements Runnable {
 	}
 
 	public void tick() {
+		int wheel = Mouse.getDWheel();
+
+		if (wheel < 0) {
+			this.active_texture++;
+			if (this.active_texture >= textures.length) this.active_texture = 0;
+		} else if (wheel > 0) {
+			this.active_texture--;
+			if (this.active_texture < 0) this.active_texture = textures.length - 1;
+		}
+
+		this.paintTexture = textures[this.active_texture];
+
 		while (Keyboard.next()) {
 			if (!Keyboard.getEventKeyState()) continue;
 			int key = Keyboard.getEventKey();
 			if (key == 28) {
 				this.level.save();
+			} else if (key == 34) {
+				this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
 			}
-			if (key == 2) {
-				this.paintTexture = 1;
-			}
-			if (key == 3) {
-				this.paintTexture = 3;
-			}
-			if (key == 4) {
-				this.paintTexture = 4;
-			}
-			if (key == 5) {
-				this.paintTexture = 5;
-			}
-			if (key == 6) {
-				this.paintTexture = 6;
-			}
-			if (key != 34) continue;
-			this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
 		}
+
 		this.level.tick();
 		this.particleEngine.tick();
 		int i = 0;
