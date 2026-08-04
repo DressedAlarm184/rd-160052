@@ -404,14 +404,14 @@ implements Runnable {
 		int hc = this.height / 2;
 		GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
 		t.init();
-		t.vertex(wc + 1, hc - 8, 0.0f);
-		t.vertex(wc - 0, hc - 8, 0.0f);
-		t.vertex(wc - 0, hc + 9, 0.0f);
-		t.vertex(wc + 1, hc + 9, 0.0f);
-		t.vertex(wc + 9, hc - 0, 0.0f);
-		t.vertex(wc - 8, hc - 0, 0.0f);
-		t.vertex(wc - 8, hc + 1, 0.0f);
-		t.vertex(wc + 9, hc + 1, 0.0f);
+		t.vertex(wc + 1, hc - 12, 0.0f);
+		t.vertex(wc - 1, hc - 12, 0.0f);
+		t.vertex(wc - 1, hc + 12, 0.0f);
+		t.vertex(wc + 1, hc + 12, 0.0f);
+		t.vertex(wc + 12, hc - 1, 0.0f);
+		t.vertex(wc - 12, hc - 1, 0.0f);
+		t.vertex(wc - 12, hc + 1, 0.0f);
+		t.vertex(wc + 12, hc + 1, 0.0f);
 		t.flush();
 	}
 
