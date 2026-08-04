@@ -36,7 +36,7 @@ public class Level {
 		this.lightDepths = new int[w * h];
 		boolean mapLoaded = this.load();
 		if (!mapLoaded) {
-			LevelGenerator.generateMap(this);
+			LevelGenerator.generateMap(this, random);
 		}
 		this.calcLightDepths(0, 0, w, h);
 	}
