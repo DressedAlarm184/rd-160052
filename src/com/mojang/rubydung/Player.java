@@ -52,6 +52,9 @@ extends Entity {
 			this.xd *= 0.7f;
 			this.zd *= 0.7f;
 		}
+		if (this.y < -50) {
+			this.resetPos();
+		}
 	}
 }
 
