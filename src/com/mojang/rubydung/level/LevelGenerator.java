@@ -3,9 +3,14 @@ package com.mojang.rubydung.level;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.level.Level;
 import java.util.Random;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 
 public class LevelGenerator {
 	public static void generateMap(Level level, Random random) {
+		int total = level.width * level.height * level.depth;
+		int generated = 0;
+
 		int w = level.width;
 		int h = level.height;
 		int d = level.depth;
@@ -13,6 +18,15 @@ public class LevelGenerator {
 		int[] heightmap1 = new PerlinNoiseFilter(0).read(w, h);
 		int[] heightmap2 = new PerlinNoiseFilter(0).read(w, h);
 		int[] cf = new PerlinNoiseFilter(1).read(w, h);
+
+		JDialog progress_dialog = new JDialog();
+		JLabel progress_label = new JLabel(String.format("Generated: 0 / %d (0.0%%)", total));
+		progress_dialog.setTitle("Generating level...");
+		progress_dialog.add(progress_label);
+		progress_dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		progress_dialog.setSize(450, 80);
+		progress_label.setFont(progress_label.getFont().deriveFont(20f));
+		progress_dialog.setVisible(true);
 
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < d; y++) {
@@ -44,9 +58,15 @@ public class LevelGenerator {
 					}
 					
 					setTile(level, x, y, z, id);
+					generated++;
+					if (generated % 50000 == 0) {
+						progress_label.setText(String.format("\rGenerated: %d / %d (%.1f%%)", generated, total, (double)generated * 100 / (double)total));
+					}
 				}
 			}
 		}
+
+		progress_dialog.dispose();
 
 		int tree_count = (int)Math.floor((w * h) / 500);
 		int[][] tree_positions = new int[tree_count][3];
