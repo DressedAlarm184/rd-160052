@@ -47,7 +47,6 @@ implements Runnable {
 	private int width;
 	private int height;
 	private FloatBuffer fogColor0 = BufferUtils.createFloatBuffer((int)4);
-	private FloatBuffer fogColor1 = BufferUtils.createFloatBuffer((int)4);
 	private Timer timer = new Timer(20.0f);
 	private Level level;
 	private LevelRenderer levelRenderer;
@@ -100,10 +99,8 @@ implements Runnable {
 		float fr = 0.5f;
 		float fg = 0.8f;
 		float fb = 1.0f;
-		this.fogColor0.put(new float[]{(float)(col0 >> 16 & 0xFF) / 255.0f, (float)(col0 >> 8 & 0xFF) / 255.0f, (float)(col0 & 0xFF) / 255.0f, 1.0f});
+		this.fogColor0.put(new float[]{fr, fg, fb, 0.5f});
 		this.fogColor0.flip();
-		this.fogColor1.put(new float[]{(float)(col1 >> 16 & 0xFF) / 255.0f, (float)(col1 >> 8 & 0xFF) / 255.0f, (float)(col1 & 0xFF) / 255.0f, 1.0f});
-		this.fogColor1.flip();
 		this.width = 800;
 		this.height = 600;
 		Display.setDisplayMode(new DisplayMode(this.width, this.height));
@@ -440,15 +437,14 @@ implements Runnable {
 	}
 
 	private void setupFog(int i) {
+		GL11.glFogi(2917, 9729);
+		GL11.glFogf(2915, 50.0f);
+		GL11.glFogf(2916, 100.0f);
+		GL11.glFog((int)2918, (FloatBuffer)this.fogColor0);
+
 		if (i == 0) {
-			GL11.glFogi((int)2917, (int)2048);
-			GL11.glFogf((int)2914, (float)0.001f);
-			GL11.glFog((int)2918, (FloatBuffer)this.fogColor0);
 			GL11.glDisable((int)2896);
 		} else if (i == 1) {
-			GL11.glFogi((int)2917, (int)2048);
-			GL11.glFogf((int)2914, (float)0.06f);
-			GL11.glFog((int)2918, (FloatBuffer)this.fogColor1);
 			GL11.glEnable((int)2896);
 			GL11.glEnable((int)2903);
 			float br = 0.6f;
