@@ -206,6 +206,7 @@ implements Runnable {
 				player.resetPos();
 			} else if (key == 33) { // F
 				player.isFlying = !player.isFlying;
+				if (!player.isFlying) player.yd = 0;
 			}
 		}
 
