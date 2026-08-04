@@ -106,7 +106,6 @@ public class Level {
 			return true;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
