@@ -159,10 +159,13 @@ implements LevelListener {
 	}
 
 	public void renderHit(HitResult h) {
+		float alpha = ((float)Math.sin((double)System.currentTimeMillis() / 200.0) * 0.05f + 0.2f);
 		Tesselator t = Tesselator.instance;
 		GL11.glEnable((int)3042);
 		GL11.glBlendFunc((int)770, (int)1);
-		GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)(((float)Math.sin((double)System.currentTimeMillis() / 200.0) * 0.05f + 0.2f)));
+		if (h.y == level.depth - 1 && h.f == 1) {
+			GL11.glColor4f((float)1.0f, (float)0.0f, (float)0.0f, alpha * 1.5f);
+		} else GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, alpha);
 		t.init();
 		Tile.rock.renderFaceNoTexture(t, h.x, h.y, h.z, h.f);
 		t.flush();
