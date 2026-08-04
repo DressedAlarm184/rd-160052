@@ -385,7 +385,7 @@ implements Runnable {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)(this.width - 48), (float)48.0f, (float)0.0f);
 		Tesselator t = Tesselator.instance;
-		GL11.glScalef((float)48.0f, (float)48.0f, (float)48.0f);
+		GL11.glScalef((float)48.0f, (float)-48.0f, (float)48.0f);
 		GL11.glRotatef((float)30.0f, (float)1.0f, (float)0.0f, (float)0.0f);
 		GL11.glRotatef((float)45.0f, (float)0.0f, (float)1.0f, (float)0.0f);
 		GL11.glTranslatef((float)1.5f, (float)-0.5f, (float)-0.5f);
