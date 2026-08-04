@@ -168,7 +168,6 @@ implements Runnable {
 						this.render(this.timer.a);
 						++frames;
 						while (System.currentTimeMillis() >= lastTime + 1000L) {
-							System.out.println(String.valueOf(frames) + " fps, " + Chunk.updates);
 							Chunk.updates = 0;
 							lastTime += 1000L;
 							frames = 0;

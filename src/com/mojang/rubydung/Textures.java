@@ -31,7 +31,6 @@ public class Textures {
 			GL11.glGenTextures((IntBuffer)ib);
 			int id = ib.get(0);
 			idMap.put(resourceName, id);
-			System.out.println(String.valueOf(resourceName) + " -> " + id);
 			GL11.glBindTexture((int)3553, (int)id);
 			GL11.glTexParameteri((int)3553, (int)10241, (int)mode);
 			GL11.glTexParameteri((int)3553, (int)10240, (int)mode);
