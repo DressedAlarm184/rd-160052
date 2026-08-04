@@ -62,6 +62,7 @@ implements Runnable {
 	private int active_texture = 0;
 	private int[] textures = {1, 3, 4, 5, 6};
 	private boolean paused = true;
+	private int last_fps = 0;
 
 	static Level create_level() {
 		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
@@ -173,6 +174,7 @@ implements Runnable {
 						while (System.currentTimeMillis() >= lastTime + 1000L) {
 							Chunk.updates = 0;
 							lastTime += 1000L;
+							this.last_fps = frames;
 							frames = 0;
 						}
 					} while (!Display.isCloseRequested());
@@ -431,8 +433,9 @@ implements Runnable {
 		t.vertex(wc - 12, hc + 1, 0.0f);
 		t.vertex(wc + 12, hc + 1, 0.0f);
 		t.flush();
+		FontRenderer.draw(10, 10, String.format("FPS: %d", last_fps));
 		if (this.paused) {
-			FontRenderer.draw(10, 10, "PAUSED");
+			FontRenderer.draw(10, 35, "PAUSED");
 		}
 	}
 
