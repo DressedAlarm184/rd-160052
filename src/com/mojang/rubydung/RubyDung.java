@@ -61,6 +61,7 @@ implements Runnable {
 	FloatBuffer lb = BufferUtils.createFloatBuffer((int)16);
 	private int active_texture = 0;
 	private int[] textures = {1, 3, 4, 5, 6};
+	private boolean paused = true;
 
 	static Level create_level() {
 		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
@@ -120,7 +121,6 @@ implements Runnable {
 		this.levelRenderer = new LevelRenderer(this.level);
 		this.player = new Player(this.level);
 		this.particleEngine = new ParticleEngine(this.level);
-		Mouse.setGrabbed((boolean)true);
 		int i = 0;
 		while (i < 10) {
 			Zombie zombie = new Zombie(this.level, 128.0f, 0.0f, 128.0f);
@@ -159,8 +159,7 @@ implements Runnable {
 				block12: {
 					block11: {
 						if (!true) break block11;
-						if (Keyboard.isKeyDown((int)1)) return;
-						if (Display.isCloseRequested()) break block12;
+						if (Display.isCloseRequested()) return;
 					}
 					do {
 						this.timer.advanceTime();
@@ -169,14 +168,13 @@ implements Runnable {
 							this.tick();
 							++i;
 						}
-						this.render(this.timer.a);
+						this.render(this.paused ? 1.0f : this.timer.a);
 						++frames;
 						while (System.currentTimeMillis() >= lastTime + 1000L) {
 							Chunk.updates = 0;
 							lastTime += 1000L;
 							frames = 0;
 						}
-						if (Keyboard.isKeyDown((int)1)) return;
 					} while (!Display.isCloseRequested());
 				}
 				return;
@@ -193,6 +191,27 @@ implements Runnable {
 	}
 
 	public void tick() {
+		while (Keyboard.next()) {
+			if (!Keyboard.getEventKeyState()) continue;
+			int key = Keyboard.getEventKey();
+			if (key == 1) { // Escape
+				this.paused = !this.paused;
+				Mouse.setGrabbed(!this.paused);
+			}
+			if (this.paused) return;
+			if (key == 28) { // Enter
+				this.level.save();
+			} else if (key == 34) { // G
+				this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
+			} else if (key == 19) { // R
+				player.resetPos();
+			} else if (key == 33) { // F
+				player.isFlying = !player.isFlying;
+			}
+		}
+
+		if (this.paused) return;
+
 		int wheel = Mouse.getDWheel();
 
 		if (wheel < 0) {
@@ -204,20 +223,6 @@ implements Runnable {
 		}
 
 		this.paintTexture = textures[this.active_texture];
-
-		while (Keyboard.next()) {
-			if (!Keyboard.getEventKeyState()) continue;
-			int key = Keyboard.getEventKey();
-			if (key == 28) { // Enter
-				this.level.save();
-			} else if (key == 34) { // G
-				this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
-			} else if (key == 19) { // R
-				player.resetPos();
-			} else if (key == 33) { // F
-				player.isFlying = !player.isFlying;
-			}
-		}
 
 		this.level.tick();
 		this.particleEngine.tick();
@@ -316,9 +321,16 @@ implements Runnable {
 	public void render(float a) {
 		float xo = Mouse.getDX();
 		float yo = Mouse.getDY();
-		this.player.turn(xo, yo);
+		if (!this.paused) this.player.turn(xo, yo);
 		this.pick(a);
 		while (Mouse.next()) {
+			if (this.paused) {
+				if (Mouse.getEventButtonState() && Mouse.getEventButton() == 0) {
+					this.paused = false;
+					Mouse.setGrabbed(true);
+				}
+				continue;
+			}
 			if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() && this.hitResult != null) {
 				Tile oldTile = Tile.tiles[this.level.getTile(this.hitResult.x, this.hitResult.y, this.hitResult.z)];
 				if (oldTile != null) oldTile.destroy(this.level, this.hitResult.x, this.hitResult.y, this.hitResult.z, this.particleEngine);
@@ -419,6 +431,9 @@ implements Runnable {
 		t.vertex(wc - 12, hc + 1, 0.0f);
 		t.vertex(wc + 12, hc + 1, 0.0f);
 		t.flush();
+		if (this.paused) {
+			FontRenderer.draw(10, 10, "PAUSED");
+		}
 	}
 
 	private void setupFog(int i) {
