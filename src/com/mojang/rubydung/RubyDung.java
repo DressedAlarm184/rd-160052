@@ -389,7 +389,7 @@ implements Runnable {
 		GL11.glRotatef((float)30.0f, (float)1.0f, (float)0.0f, (float)0.0f);
 		GL11.glRotatef((float)45.0f, (float)0.0f, (float)1.0f, (float)0.0f);
 		GL11.glTranslatef((float)1.5f, (float)-0.5f, (float)-0.5f);
-		int id = Textures.loadTexture("/terrain.png", 9728);
+		int id = Textures.loadTexture("/assets/terrain.png", 9728);
 		GL11.glBindTexture((int)3553, (int)id);
 		GL11.glEnable((int)3553);
 		t.init();

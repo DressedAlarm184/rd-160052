@@ -60,7 +60,7 @@ extends Entity {
 
 	public void render(float a) {
 		GL11.glEnable((int)3553);
-		GL11.glBindTexture((int)3553, (int)Textures.loadTexture("/char.png", 9728));
+		GL11.glBindTexture((int)3553, (int)Textures.loadTexture("/assets/char.png", 9728));
 		GL11.glPushMatrix();
 		double time = (double)System.nanoTime() / 1.0E9 * 10.0 * (double)this.speed + (double)this.timeOffs;
 		float size = 0.058333334f;

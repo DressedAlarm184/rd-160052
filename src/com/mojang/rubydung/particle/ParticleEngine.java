@@ -41,7 +41,7 @@ public class ParticleEngine {
 
 	public void render(Player player, float a, int layer) {
 		GL11.glEnable((int)3553);
-		int id = Textures.loadTexture("/terrain.png", 9728);
+		int id = Textures.loadTexture("/assets/terrain.png", 9728);
 		GL11.glBindTexture((int)3553, (int)id);
 		float xa = -((float)Math.cos((double)player.yRot * Math.PI / 180.0));
 		float za = -((float)Math.sin((double)player.yRot * Math.PI / 180.0));

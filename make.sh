@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-mkdir -p jar
+mkdir -p jar/assets
 
 javac -cp ".:libs/*" -d jar/ $(find src/ -name "*.java")
 
-find src -type f ! -name "*.java" -exec cp {} jar/ \;
+cp assets/* jar/assets/
 
 jar cfe game/client.jar com.mojang.rubydung.RubyDung -C jar/ .
 

@@ -87,7 +87,7 @@ implements LevelListener {
 
 	public void render(Player player, int layer) {
 		GL11.glEnable((int)3553);
-		int id = Textures.loadTexture("/terrain.png", 9728);
+		int id = Textures.loadTexture("/assets/terrain.png", 9728);
 		GL11.glBindTexture((int)3553, (int)id);
 		Frustum frustum = Frustum.getFrustum();
 		int i = 0;
