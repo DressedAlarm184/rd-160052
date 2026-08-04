@@ -24,9 +24,6 @@ extends Entity {
 		this.zo = this.z;
 		float xa = 0.0f;
 		float ya = 0.0f;
-		if (Keyboard.isKeyDown((int)19)) {
-			this.resetPos();
-		}
 		if (Keyboard.isKeyDown((int)200) || Keyboard.isKeyDown((int)17)) {
 			ya -= 1.0f;
 		}

@@ -210,6 +210,8 @@ implements Runnable {
 				this.level.save();
 			} else if (key == 34) {
 				this.zombies.add(new Zombie(this.level, this.player.x, this.player.y, this.player.z));
+			} else if (key == 19) {
+				player.resetPos();
 			}
 		}
 
