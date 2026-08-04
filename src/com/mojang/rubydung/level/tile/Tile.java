@@ -5,7 +5,6 @@ package com.mojang.rubydung.level.tile;
 
 import com.mojang.rubydung.level.Level;
 import com.mojang.rubydung.level.Tesselator;
-import com.mojang.rubydung.level.tile.DirtTile;
 import com.mojang.rubydung.level.tile.GrassTile;
 import com.mojang.rubydung.particle.Particle;
 import com.mojang.rubydung.particle.ParticleEngine;
@@ -17,10 +16,11 @@ public class Tile {
 	public static final Tile empty = null;
 	public static final Tile rock = new Tile(1, 1);
 	public static final Tile grass = new GrassTile(2);
-	public static final Tile dirt = new DirtTile(3, 2);
+	public static final Tile dirt = new Tile(3, 2);
 	public static final Tile stoneBrick = new Tile(4, 16);
 	public static final Tile wood = new Tile(5, 4);
 	public static final Tile bricks = new Tile(6, 5);
+	public static final Tile bedrock = new UnbreakableTile(7, 6);
 	public int tex;
 	public final int id;
 
@@ -183,6 +183,9 @@ public class Tile {
 	}
 
 	public void destroy(Level level, int x, int y, int z, ParticleEngine particleEngine) {
+		boolean changed = level.setTile(x, y, z, 0);
+		if (!changed) return;
+
 		int SD = 4;
 		int xx = 0;
 		while (xx < SD) {

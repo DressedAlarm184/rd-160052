@@ -83,6 +83,9 @@ public class Level {
 					if (y <= rh) {
 						id = Tile.rock.id;
 					}
+					if (y <= 2) {
+						id = Tile.bedrock.id;
+					}
 					this.blocks[i] = (byte)id;
 					++z;
 				}
