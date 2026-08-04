@@ -162,7 +162,7 @@ implements LevelListener {
 		Tesselator t = Tesselator.instance;
 		GL11.glEnable((int)3042);
 		GL11.glBlendFunc((int)770, (int)1);
-		GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)(((float)Math.sin((double)System.currentTimeMillis() / 100.0) * 0.2f + 0.4f) * 0.5f));
+		GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)(((float)Math.sin((double)System.currentTimeMillis() / 200.0) * 0.05f + 0.2f)));
 		t.init();
 		Tile.rock.renderFaceNoTexture(t, h.x, h.y, h.z, h.f);
 		t.flush();
