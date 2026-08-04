@@ -17,10 +17,13 @@ public class Tile {
 	public static final Tile rock = new Tile(1, 1);
 	public static final Tile grass = new GrassTile(2);
 	public static final Tile dirt = new Tile(3, 2);
-	public static final Tile stoneBrick = new Tile(4, 16);
+	public static final Tile cobble = new Tile(4, 16);
 	public static final Tile wood = new Tile(5, 4);
 	public static final Tile bricks = new Tile(6, 5);
 	public static final Tile bedrock = new UnbreakableTile(7, 6);
+	public static final Tile log = new MultiTile(8, 8, 8, 7, 7, 7, 7);
+	public static final Tile leaves = new TransparentTile(9, 9);
+
 	public int tex;
 	public final int id;
 

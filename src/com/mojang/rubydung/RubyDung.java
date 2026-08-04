@@ -59,7 +59,7 @@ implements Runnable {
 	private HitResult hitResult = null;
 	FloatBuffer lb = BufferUtils.createFloatBuffer((int)16);
 	private int active_texture = 0;
-	private int[] textures = {1, 3, 4, 5, 6};
+	private int[] textures = {1, 3, 4, 5, 6, 8, 9};
 	private boolean paused = true;
 	private int last_fps = 0;
 
