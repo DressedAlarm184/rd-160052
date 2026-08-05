@@ -224,7 +224,7 @@ implements Runnable {
 
 		this.paintTexture = textures[this.active_texture];
 
-		this.level.tick();
+		this.level.tick(player);
 		this.particleEngine.tick();
 		int i = 0;
 		while (i < this.zombies.size()) {

@@ -7,6 +7,7 @@ import com.mojang.rubydung.level.LevelListener;
 import com.mojang.rubydung.level.PerlinNoiseFilter;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.phys.AABB;
+import com.mojang.rubydung.Player;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -196,20 +197,30 @@ public class Level {
 		return tile.isSolid();
 	}
 
-	public void tick() {
-		this.unprocessed += this.width * this.height * this.depth;
-		int ticks = this.unprocessed / 400;
-		this.unprocessed -= ticks * 400;
-		int i = 0;
-		while (i < ticks) {
-			int z;
-			int y;
-			int x = this.random.nextInt(this.width);
-			Tile tile = Tile.tiles[this.getTile(x, y = this.random.nextInt(this.depth), z = this.random.nextInt(this.height))];
+	public void tick(Player player) {
+		int minX = Math.max(0, (int) player.x - 100);
+		int maxX = Math.min(this.width, (int) player.x + 100);
+
+		int minZ = Math.max(0, (int) player.z - 100);
+		int maxZ = Math.min(this.height, (int) player.z + 100);
+
+		int rangeX = maxX - minX;
+		int rangeZ = maxZ - minZ;
+
+		if (rangeX <= 0 || rangeZ <= 0) return;
+
+		int activeVolume = rangeX * rangeZ * this.depth;
+		int ticks = activeVolume / 400;
+
+		for (int i = 0; i < ticks; i++) {
+			int x = minX + this.random.nextInt(rangeX);
+			int z = minZ + this.random.nextInt(rangeZ);
+			int y = this.random.nextInt(this.depth);
+
+			Tile tile = Tile.tiles[this.getTile(x, y, z)];
 			if (tile != null) {
 				tile.tick(this, x, y, z, this.random);
 			}
-			++i;
 		}
 	}
 }

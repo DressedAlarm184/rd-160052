@@ -86,18 +86,25 @@ implements LevelListener {
 	}
 
 	public void render(Player player, int layer) {
-		GL11.glEnable((int)3553);
+		GL11.glEnable(3553);
 		int id = Textures.loadTexture("/assets/terrain.png", 9728);
-		GL11.glBindTexture((int)3553, (int)id);
+		GL11.glBindTexture(3553, id);
 		Frustum frustum = Frustum.getFrustum();
-		int i = 0;
-		while (i < this.chunks.length) {
-			if (frustum.isVisible(this.chunks[i].aabb)) {
-				this.chunks[i].render(layer);
+
+		for (int i = 0; i < this.chunks.length; i++) {
+			Chunk chunk = this.chunks[i];
+
+			float dx = (chunk.x0 + chunk.x1) * 0.5f - (float)player.x;
+			float dy = (chunk.y0 + chunk.y1) * 0.5f - (float)player.y;
+			float dz = (chunk.z0 + chunk.z1) * 0.5f - (float)player.z;
+			float distSq = dx * dx + dy * dy + dz * dz;
+
+			if (distSq <= 14400 && frustum.isVisible(chunk.aabb)) {
+				chunk.render(layer);
 			}
-			++i;
 		}
-		GL11.glDisable((int)3553);
+
+		GL11.glDisable(3553);
 	}
 
 	public void updateDirtyChunks(Player player) {
