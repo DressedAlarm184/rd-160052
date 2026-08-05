@@ -23,28 +23,37 @@ public class FontRenderer {
 
 		GL11.glBegin(GL11.GL_QUADS);
 		
+		float drawX = 0;
+		float drawY = 0;
+
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
-			
+
+			if (c == '\n') {
+				drawX = 0;
+				drawY += CHAR_SIZE + 2;
+				continue;
+			}
+
 			int col = c % GRID_SIZE;
 			int row = c / GRID_SIZE;
-			
+
 			float u = col * UV_STEP;
 			float v = row * UV_STEP;
-			
-			float drawX = i * CHAR_SIZE;
 
 			GL11.glTexCoord2f(u, v);
-			GL11.glVertex2f(drawX, 0);
-			
+			GL11.glVertex2f(drawX, drawY);
+
 			GL11.glTexCoord2f(u, v + UV_STEP);
-			GL11.glVertex2f(drawX, CHAR_SIZE);
-			
+			GL11.glVertex2f(drawX, drawY + CHAR_SIZE);
+
 			GL11.glTexCoord2f(u + UV_STEP, v + UV_STEP);
-			GL11.glVertex2f(drawX + CHAR_SIZE, CHAR_SIZE);
-			
+			GL11.glVertex2f(drawX + CHAR_SIZE, drawY + CHAR_SIZE);
+
 			GL11.glTexCoord2f(u + UV_STEP, v);
-			GL11.glVertex2f(drawX + CHAR_SIZE, 0);
+			GL11.glVertex2f(drawX + CHAR_SIZE, drawY);
+
+			drawX += CHAR_SIZE;
 		}
 		
 		GL11.glEnd();

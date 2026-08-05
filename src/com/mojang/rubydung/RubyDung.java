@@ -62,6 +62,7 @@ implements Runnable {
 	private int[] textures = {1, 3, 4, 5, 6, 8, 9};
 	private boolean paused = true;
 	private int last_fps = 0;
+	private boolean show_debug_info = false;
 
 	static Level create_level() {
 		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
@@ -207,6 +208,8 @@ implements Runnable {
 			} else if (key == 33) { // F
 				player.isFlying = !player.isFlying;
 				if (!player.isFlying) player.yd = 0;
+			} else if (key == Keyboard.KEY_F3) {
+				this.show_debug_info = !this.show_debug_info;
 			}
 		}
 
@@ -431,9 +434,14 @@ implements Runnable {
 		t.vertex(wc - 12, hc + 1, 0.0f);
 		t.vertex(wc + 12, hc + 1, 0.0f);
 		t.flush();
-		FontRenderer.draw(10, 10, String.format("FPS: %d", last_fps));
 		if (this.paused) {
-			FontRenderer.draw(10, 35, "PAUSED");
+			FontRenderer.draw(10, 575, "PAUSED");
+		}
+		if (this.show_debug_info) {
+			FontRenderer.draw(10, 10,
+				String.format("FPS: %d\nX: %d, Y: %d, Z: %d\nUpdates: %d",
+				last_fps, (int)player.x, (int)player.y, (int)player.z, Chunk.updates)
+			);
 		}
 	}
 
