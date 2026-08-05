@@ -37,7 +37,12 @@ implements Comparator<Chunk> {
 		if (t0 > t1) {
 			return 1;
 		}
-		return c0.distanceToSqr(this.player) < c1.distanceToSqr(this.player) ? -1 : 1;
+		float d0 = c0.distanceToSqr(this.player);
+		float d1 = c1.distanceToSqr(this.player);
+		if (d0 == d1) {
+			return 0;
+		}
+		return d0 < d1 ? -1 : 1;
 	}
 }
 
