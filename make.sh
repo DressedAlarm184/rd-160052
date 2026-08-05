@@ -5,7 +5,7 @@ mkdir -p jar/assets
 
 javac -cp ".:libs/*" -d jar/ $(find src/ -name "*.java")
 
-cp assets/* jar/assets/
+cp -r assets/* jar/assets/
 
 jar cfe game/client.jar com.mojang.rubydung.RubyDung -C jar/ .
 

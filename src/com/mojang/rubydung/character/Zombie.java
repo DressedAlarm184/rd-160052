@@ -19,6 +19,7 @@ extends Entity {
 	public float speed;
 	public float rotA = (float)(Math.random() + 1.0) * 0.01f;
 	private static ZombieModel zombieModel = new ZombieModel();
+	private int texture_id;
 
 	public Zombie(Level level, float x, float y, float z) {
 		super(level);
@@ -26,6 +27,11 @@ extends Entity {
 		this.timeOffs = (float)Math.random() * 1239813.0f;
 		this.rot = (float)(Math.random() * Math.PI * 2.0);
 		this.speed = 1.0f;
+		if (Math.random() > 0.5) {
+			texture_id = (int)Textures.loadTexture("/assets/zombies/alex.png", 9728);
+		} else {
+			texture_id = (int)Textures.loadTexture("/assets/zombies/steve.png", 9728);
+		}
 	}
 
 	@Override
@@ -60,7 +66,7 @@ extends Entity {
 
 	public void render(float a) {
 		GL11.glEnable((int)3553);
-		GL11.glBindTexture((int)3553, (int)Textures.loadTexture("/assets/char.png", 9728));
+		GL11.glBindTexture((int)3553, this.texture_id);
 		GL11.glPushMatrix();
 		double time = (double)System.nanoTime() / 1.0E9 * 10.0 * (double)this.speed + (double)this.timeOffs;
 		float size = 0.058333334f;
