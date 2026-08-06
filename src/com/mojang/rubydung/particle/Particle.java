@@ -5,7 +5,7 @@ package com.mojang.rubydung.particle;
 
 import com.mojang.rubydung.Entity;
 import com.mojang.rubydung.level.Level;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 
 public class Particle
 extends Entity {
@@ -53,7 +53,7 @@ extends Entity {
 		}
 	}
 
-	public void render(Tesselator t, float a, float xa, float ya, float za) {
+	public void render(Tessellator t, float a, float xa, float ya, float za) {
 		float u0 = ((float)(this.tex % 16) + this.uo / 4.0f) / 16.0f;
 		float u1 = u0 + 0.015609375f;
 		float v0 = ((float)(this.tex / 16) + this.vo / 4.0f) / 16.0f;

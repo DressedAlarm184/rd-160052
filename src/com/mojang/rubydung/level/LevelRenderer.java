@@ -14,7 +14,7 @@ import com.mojang.rubydung.level.DirtyChunkSorter;
 import com.mojang.rubydung.level.Frustum;
 import com.mojang.rubydung.level.Level;
 import com.mojang.rubydung.level.LevelListener;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.phys.AABB;
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ implements LevelListener {
 	}
 
 	public void pick(Player player) {
-		Tesselator t = Tesselator.instance;
+		Tessellator t = Tessellator.instance;
 		float r = 3.0f;
 		AABB box = player.bb.grow(r, r, r);
 		int x0 = (int)box.x0;
@@ -167,7 +167,7 @@ implements LevelListener {
 
 	public void renderHit(HitResult h) {
 		float alpha = ((float)Math.sin((double)System.currentTimeMillis() / 200.0) * 0.05f + 0.2f);
-		Tesselator t = Tesselator.instance;
+		Tessellator t = Tessellator.instance;
 		GL11.glEnable((int)3042);
 		GL11.glBlendFunc((int)770, (int)1);
 		if (h.y == level.depth - 1 && h.f == 1) {

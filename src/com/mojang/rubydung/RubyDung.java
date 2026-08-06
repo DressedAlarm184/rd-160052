@@ -21,7 +21,7 @@ import com.mojang.rubydung.level.Chunk;
 import com.mojang.rubydung.level.Frustum;
 import com.mojang.rubydung.level.Level;
 import com.mojang.rubydung.level.LevelRenderer;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.particle.ParticleEngine;
 import com.mojang.rubydung.phys.AABB;
@@ -379,7 +379,7 @@ implements Runnable {
 		this.setupOrthoCamera();
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)(this.width - 48), (float)48.0f, (float)0.0f);
-		Tesselator t = Tesselator.instance;
+		Tessellator t = Tessellator.instance;
 		GL11.glScalef((float)48.0f, (float)-48.0f, (float)48.0f);
 		GL11.glRotatef((float)30.0f, (float)1.0f, (float)0.0f, (float)0.0f);
 		GL11.glRotatef((float)45.0f, (float)0.0f, (float)1.0f, (float)0.0f);

@@ -9,7 +9,7 @@ package com.mojang.rubydung.particle;
 import com.mojang.rubydung.Player;
 import com.mojang.rubydung.Textures;
 import com.mojang.rubydung.level.Level;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 import com.mojang.rubydung.particle.Particle;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class ParticleEngine {
 		float xa = -((float)Math.cos((double)player.yRot * Math.PI / 180.0));
 		float za = -((float)Math.sin((double)player.yRot * Math.PI / 180.0));
 		float ya = 1.0f;
-		Tesselator t = Tesselator.instance;
+		Tessellator t = Tessellator.instance;
 		GL11.glColor4f((float)0.8f, (float)0.8f, (float)0.8f, (float)1.0f);
 		t.init();
 		int i = 0;

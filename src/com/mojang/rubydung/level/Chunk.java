@@ -8,7 +8,7 @@ package com.mojang.rubydung.level;
 
 import com.mojang.rubydung.Player;
 import com.mojang.rubydung.level.Level;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.phys.AABB;
 import org.lwjgl.opengl.GL11;
@@ -28,7 +28,7 @@ public class Chunk {
 	private boolean dirty = true;
 	private int lists = -1;
 	public long dirtiedTime = 0L;
-	private static Tesselator t = Tesselator.instance;
+	private static Tessellator t = Tessellator.instance;
 	public static int updates = 0;
 	private static long totalTime = 0L;
 	private static int totalUpdates = 0;

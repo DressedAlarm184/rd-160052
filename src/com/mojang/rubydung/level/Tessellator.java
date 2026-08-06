@@ -11,7 +11,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class Tesselator {
+public class Tessellator {
 	private static final int MAX_MEMORY_USE = 0x400000;
 	private static final int MAX_FLOATS = 524288;
 	private FloatBuffer buffer = BufferUtils.createFloatBuffer((int)524288);
@@ -26,9 +26,9 @@ public class Tesselator {
 	private boolean hasTexture = false;
 	private int len = 3;
 	private int p = 0;
-	public static Tesselator instance = new Tesselator();
+	public static Tessellator instance = new Tessellator();
 
-	private Tesselator() {
+	private Tessellator() {
 	}
 
 	public void flush() {

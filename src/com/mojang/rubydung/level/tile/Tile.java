@@ -4,7 +4,7 @@
 package com.mojang.rubydung.level.tile;
 
 import com.mojang.rubydung.level.Level;
-import com.mojang.rubydung.level.Tesselator;
+import com.mojang.rubydung.level.Tessellator;
 import com.mojang.rubydung.level.tile.GrassTile;
 import com.mojang.rubydung.particle.Particle;
 import com.mojang.rubydung.particle.ParticleEngine;
@@ -37,7 +37,7 @@ public class Tile {
 		this.tex = tex;
 	}
 
-	public void render(Tesselator t, Level level, int layer, int x, int y, int z) {
+	public void render(Tessellator t, Level level, int layer, int x, int y, int z) {
 		float c1 = 1.0f;
 		float c2 = 0.8f;
 		float c3 = 0.6f;
@@ -75,7 +75,7 @@ public class Tile {
 		return this.tex;
 	}
 
-	public void renderFace(Tesselator t, int x, int y, int z, int face) {
+	public void renderFace(Tessellator t, int x, int y, int z, int face) {
 		int tex = this.getTexture(face);
 		float u0 = (float)(tex % 16) / 16.0f;
 		float u1 = u0 + 0.0624375f;
@@ -125,7 +125,7 @@ public class Tile {
 		}
 	}
 
-	public void renderFaceNoTexture(Tesselator t, int x, int y, int z, int face) {
+	public void renderFaceNoTexture(Tessellator t, int x, int y, int z, int face) {
 		float x0 = (float)x + 0.0f;
 		float x1 = (float)x + 1.0f;
 		float y0 = (float)y + 0.0f;
