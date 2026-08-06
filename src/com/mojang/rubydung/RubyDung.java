@@ -179,6 +179,8 @@ implements Runnable {
 				if (!player.isFlying) player.yd = 0;
 			} else if (key == Keyboard.KEY_F3) {
 				this.show_debug_info = !this.show_debug_info;
+			} else if (key >= Keyboard.KEY_1 && key <= Keyboard.KEY_7) {
+				this.active_texture = key - Keyboard.KEY_1;
 			}
 		}
 
