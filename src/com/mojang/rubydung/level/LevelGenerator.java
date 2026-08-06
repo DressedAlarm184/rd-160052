@@ -8,23 +8,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.FileInputStream;
+import java.io.DataInputStream;
 
 public class LevelGenerator {
 	public static Level createLevel() {
-		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
+		int lvlX = 0, lvlY = 0, lvlZ = 0;
+
+		if (!Files.exists(Path.of("level.dat"))) {
 			String size = JOptionPane.showInputDialog("Enter level size (Format: X,Y,Z)", "256,64,256");
 			if (size == null || size.trim().isEmpty()) System.exit(0);
-			try {
-				Files.writeString(Path.of("size.txt"), size);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
-
-		int lvlX, lvlY, lvlZ;
-		try {
-			String size = Files.readString(Path.of("size.txt"));
 			String[] sizes = size.split(",");
 			for (int i = 0; i < sizes.length; i++) {
 				sizes[i] = sizes[i].trim();
@@ -32,7 +25,18 @@ public class LevelGenerator {
 			lvlX = Integer.valueOf(sizes[0]);
 			lvlY = Integer.valueOf(sizes[1]);
 			lvlZ = Integer.valueOf(sizes[2]);
+		} else {
+			try (DataInputStream dis = new DataInputStream(new FileInputStream("level.dat"))) {
+				lvlX = dis.readInt();
+				lvlZ = dis.readInt();
+				lvlY = dis.readInt();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
 
+		try {
 			Level level = new Level(lvlX, lvlZ, lvlY);
 
 			if (!level.load()) {
@@ -49,7 +53,6 @@ public class LevelGenerator {
 
 			level.calcLightDepths(0, 0, lvlX, lvlZ);
 			return level;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);

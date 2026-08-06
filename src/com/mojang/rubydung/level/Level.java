@@ -39,7 +39,9 @@ public class Level {
 
 	public boolean load() {
 		try {
-			DataInputStream dis = new DataInputStream(new GZIPInputStream(new FileInputStream(new File("level.dat"))));
+			FileInputStream fis = new FileInputStream("level.dat");
+			fis.skipNBytes(12);
+			DataInputStream dis = new DataInputStream(new GZIPInputStream(fis));
 			dis.readFully(this.blocks);
 			this.calcLightDepths(0, 0, this.width, this.height);
 			int i = 0;
@@ -57,7 +59,16 @@ public class Level {
 
 	public void save() {
 		try {
-			DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(new File("level.dat"))));
+			FileOutputStream fos = new FileOutputStream("level.dat");
+
+			DataOutputStream header = new DataOutputStream(fos);
+			header.writeInt(this.width);
+			header.writeInt(this.height);
+			header.writeInt(this.depth);
+			header.flush();
+
+			DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(fos));
+
 			dos.write(this.blocks);
 			dos.close();
 		}
