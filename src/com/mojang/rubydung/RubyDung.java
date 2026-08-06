@@ -26,11 +26,11 @@ import com.mojang.rubydung.level.tile.Tile;
 import com.mojang.rubydung.particle.ParticleEngine;
 import com.mojang.rubydung.phys.AABB;
 import com.mojang.rubydung.FontRenderer;
+import com.mojang.rubydung.level.LevelGenerator;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -39,8 +39,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.opengl.DisplayMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class RubyDung
 implements Runnable {
@@ -64,37 +62,8 @@ implements Runnable {
 	private int last_fps = 0;
 	private boolean show_debug_info = false;
 
-	static Level create_level() {
-		if (!Files.exists(Path.of("size.txt")) || !Files.exists(Path.of("level.dat"))) {
-			String size = JOptionPane.showInputDialog("Enter level size (Format: X,Y,Z)", "256,64,256");
-			if (size == null || size.trim().isEmpty()) System.exit(0);
-			try {
-				Files.writeString(Path.of("size.txt"), size);
-			} catch (Throwable e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
-		int lvlX, lvlY, lvlZ;
-		try {
-			String size = Files.readString(Path.of("size.txt"));
-			String[] sizes = size.split(",");
-			for (int i = 0; i < sizes.length; i++) {
-				sizes[i] = sizes[i].trim();
-			}
-			lvlX = Integer.valueOf(sizes[0]);
-			lvlY = Integer.valueOf(sizes[1]);
-			lvlZ = Integer.valueOf(sizes[2]);
-			return new Level(lvlX, lvlZ, lvlY);
-		} catch (Throwable e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		throw new AssertionError("Unreachable");
-	}
-
 	public void init() throws LWJGLException, IOException {
-		this.level = create_level();
+		this.level = LevelGenerator.createLevel();
 		int col0 = 16710650;
 		int col1 = 920330;
 		float fr = 0.5f;
@@ -148,7 +117,7 @@ implements Runnable {
 			this.init();
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.toString(), "Failed to start RubyDung", 0);
+			e.printStackTrace();
 			System.exit(0);
 		}
 		long lastTime = System.currentTimeMillis();

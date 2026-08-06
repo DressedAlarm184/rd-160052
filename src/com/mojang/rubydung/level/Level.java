@@ -26,7 +26,7 @@ public class Level {
 	public byte[] blocks;
 	private int[] lightDepths;
 	private ArrayList<LevelListener> levelListeners = new ArrayList();
-	private Random random = new Random();
+	public Random random = new Random();
 	int unprocessed = 0;
 
 	public Level(int w, int h, int d) {
@@ -35,11 +35,6 @@ public class Level {
 		this.depth = d;
 		this.blocks = new byte[w * h * d];
 		this.lightDepths = new int[w * h];
-		boolean mapLoaded = this.load();
-		if (!mapLoaded) {
-			LevelGenerator.generateMap(this, random);
-		}
-		this.calcLightDepths(0, 0, w, h);
 	}
 
 	public boolean load() {
