@@ -40,7 +40,7 @@ public class Level {
 	public boolean load() {
 		try {
 			FileInputStream fis = new FileInputStream("level.dat");
-			fis.skipNBytes(12);
+			fis.skipNBytes(8192);
 			DataInputStream dis = new DataInputStream(new GZIPInputStream(fis));
 			dis.readFully(this.blocks);
 			this.calcLightDepths(0, 0, this.width, this.height);
@@ -65,6 +65,11 @@ public class Level {
 			header.writeInt(this.width);
 			header.writeInt(this.height);
 			header.writeInt(this.depth);
+
+			for (int i = header.size(); i < 8192; i++) {
+				header.writeByte(0);
+			}
+
 			header.flush();
 
 			DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(fos));
