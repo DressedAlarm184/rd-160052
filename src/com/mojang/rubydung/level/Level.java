@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import javax.swing.JOptionPane;
 
 public class Level {
 	private static final int TILE_UPDATE_INTERVAL = 400;
@@ -51,8 +52,14 @@ public class Level {
 			}
 			dis.close();
 			return true;
-		}
-		catch (Exception e) {
+		} catch (java.io.FileNotFoundException e) {
+			return false;
+		} catch (Exception e) {
+			int result = JOptionPane.showConfirmDialog(null,
+				"There was an error reading the level data.\nDo you want to regenerate it using the same size as the old level?\n\nError details:\n" + e.getMessage(),
+				"Level Load Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE
+			);
+			if (result == JOptionPane.NO_OPTION || result == JOptionPane.CLOSED_OPTION) System.exit(1);
 			return false;
 		}
 	}
