@@ -44,7 +44,9 @@ extends Entity {
 			if (this.isFlying) fly_yd = 0.5f;
 		}
 		if (Keyboard.isKeyDown((int)42) && this.isFlying) fly_yd = -0.5f; // Shift
-		this.moveRelative(xa, ya, this.isFlying ? 0.2f : this.onGround ? 0.1f : 0.02f);
+		float speed = this.isFlying ? 0.2f : this.onGround ? 0.1f : 0.02f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) speed *= 1.5;
+		this.moveRelative(xa, ya, speed);
 		if (!this.isFlying) {
 			this.yd = (float)((double)this.yd - 0.08);
 			this.move(this.xd, this.yd, this.zd);
